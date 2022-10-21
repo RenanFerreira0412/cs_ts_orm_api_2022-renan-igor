@@ -14,7 +14,7 @@ describe("persistence test", () => {
     });
 
 
-    it('teste /endereco/list e /endereco/delete', async () => {
+    test('teste /endereco/list e /endereco/delete', async () => {
         var agent = supertest(app);
         const postList = await agent.get('/enderecos');
         expect(postList.statusCode).toEqual(200);
@@ -33,7 +33,7 @@ describe("persistence test", () => {
             expect(postDelete.statusCode).toEqual(204);
         }
         }else{
-            const data = { "cep" : "Endereco de testes", "complemento" :"402" };
+            const data = { "cep" : "96300000", "complemento" :"402" };
             const postCreate = await agent.post('/enderecos').send(data);
             
             console.log("Cadastrou o endereco: ");
@@ -44,7 +44,7 @@ describe("persistence test", () => {
     });
 
 
-    it('teste /jogador/list e /jogador/delete', async () => {
+    test('teste /jogador/list e /jogador/delete', async () => {
         var agent = supertest(app);
         const ret = await agent.get('/jogadores');
         expect(ret.statusCode).toEqual(200);
@@ -85,10 +85,5 @@ describe("persistence test", () => {
             expect(postCreateJogador.statusCode).toEqual(200);
         }
         });
-
-
-
-
-
 });
 

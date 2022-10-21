@@ -73,6 +73,18 @@ class PatenteController {
 
         return res.json(p);
     }
+
+    async find(req: Request, res: Response) {
+        const repository = getRepository(Patente);
+        const { id } = req.body;
+        const end = await repository.findOne({ where: { id } });
+
+        if (end) {
+            return res.json(end);
+        } else {
+            return res.json(end);
+        }
+    }
 }
 
 export default new PatenteController();

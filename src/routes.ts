@@ -17,12 +17,15 @@ router.post('/patentes', PatenteController.store);
 router.get('/patentes', PatenteController.list);
 router.put('/patentes', PatenteController.update);
 router.delete('/patentes', PatenteController.delete);
+router.post('/patentes/find', PatenteController.find);
 
 
 //criando  rotas para /enderecos.
 router.post('/enderecos', EnderecoController.store);//define uma rota vai método post para chamar o método store da classe EnderecoController
 router.get('/enderecos', EnderecoController.list);//define uma rota ...
 router.delete('/enderecos', EnderecoController.delete);//define uma rota ...
+router.post('/enderecos/delete', EnderecoController.delete);
+router.post('/enderecos/find', EnderecoController.find);
 
 
 
