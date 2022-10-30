@@ -69,7 +69,7 @@ describe("persistence test", () => {
 
             const postCreatePatente = await agent.post('/patentes').send({ "nome": "Platina", "cor": "cinza" });
             expect(postCreatePatente.statusCode).toEqual(200);
-            const postFindPatente = await agent.get('/patentes').send({ "cep": "99010010" });
+            const postFindPatente = await agent.get('/patentes').send({ "nome": "Platina" });
             expect(postFindPatente.statusCode).toEqual(200);
 
             //console.log(postFindEndereco.body);
@@ -77,7 +77,7 @@ describe("persistence test", () => {
                 "nickname": "teste@gmail.com",
                 "senha": "123123",
                 "pontos": 300,
-                "patentes": postFindPatente.body[0]
+                "patentes": [{"id":postFindPatente.body[0]}]
             };
 
             const postCreateJogador = await agent.post('/jogadores').send(data);

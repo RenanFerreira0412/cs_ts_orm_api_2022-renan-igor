@@ -10,10 +10,11 @@ class JogadorController {
 
         const repository = getRepository(Jogador);
         //retorna uma lista de objetos contendo os registros de tb_jogador
-        const lista = await repository.find();
+        //const lista = await repository.find();
 
-        //retorna uma lsita de objetos contendos os registros de tb_jogador e mais as vinculações com tb_endereco, caso exista.
-        //const lista = await repository.createQueryBuilder('tb_jogador').innerJoinAndSelect("tb_jogador.endereco", "endereco").getMany();
+        //retorna uma lista de objetos contendos os registros de tb_jogador e mais as vinculações com tb_endereco, caso exista.
+        const lista = await repository.createQueryBuilder('tb_jogador').innerJoinAndSelect("tb_jogador.patentes", "patente").getMany();
+        //const lista = await repository.createQueryBuilder('tb_jogador').innerJoinAndSelect("tb_jogador.endereco", "endereco").leftJoinAndSelect("tb_jogador.patentes", "patente").getMany();
 
         return res.json(lista);
     }
@@ -68,11 +69,24 @@ class JogadorController {
 
         const { nickname, endereco, patentes } = req.body;//extrai os atributos nickname e endereco do corpo da mensagem.
 
-        const nicknameExists = await repository.findOne({ where: { nickname } });//consulta na tabela se existe um registro com o mesmo nickname da mensagem.
-        const enderecoExists = await getRepository(Endereco).findOne({ where: { "id": endereco.id } });//consulta na tabela se existe um registro com o mesmo endereco da mensagem.
-        const patenteExists = await getRepository(Patente).findOne({ where: { "id": patentes.id } });//consulta na tabela se existe um registro com a mesma patente da mensagem.
+        var patenteId;
 
-        if (!endereco || !nicknameExists || !enderecoExists || !patenteExists) {
+        //Verifica se o vetor patentes não está vazio
+        if (patentes != undefined) {
+            //Percorre o vetor patentes do jogador para verificar as patentes existentes
+            for (var i = 0; i < patentes.length; i++) {
+                patenteId = patentes[i];
+                console.log('Id da patente' + patenteId.id);
+            }
+        } else {
+            patenteId = 'undefined';
+        }
+
+        const nicknameExists = await repository.findOne({ where: { nickname } });//consulta na tabela se existe um registro com o mesmo nickname da mensagem.
+        //const enderecoExists = await getRepository(Endereco).findOne({ where: { "id": endereco.id } });//consulta na tabela se existe um registro com o mesmo endereco da mensagem.
+        const patenteExists = await getRepository(Patente).findOne({ where: { "id": patenteId.id } });//consulta na tabela se existe um registro com a mesma patente da mensagem.
+
+        if (!nicknameExists || !patenteExists || patenteId == 'undefined') {
             return res.sendStatus(404);
         }
 
