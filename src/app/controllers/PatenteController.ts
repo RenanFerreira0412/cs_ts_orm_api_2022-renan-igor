@@ -57,7 +57,7 @@ class PatenteController {
 
     async update(req: Request, res: Response) {
 
-        const repository = getRepository(Patente);//recupera o repositorio do jogador.
+        const repository = getRepository(Patente);//recupera o repositorio Patente.
 
         const { id } = req.body;//extrai os atributos id e endereco do corpo da mensagem.
 
@@ -67,7 +67,7 @@ class PatenteController {
             return res.sendStatus(404);
         }
 
-        const p = repository.create(req.body); //cria a entidade Jogador
+        const p = repository.create(req.body); //cria a entidade Patente
 
         await repository.save(p); //persiste (update) a entidade na tabela.
 
