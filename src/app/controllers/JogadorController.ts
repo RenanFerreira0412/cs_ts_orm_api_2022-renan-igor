@@ -76,7 +76,7 @@ class JogadorController {
             //Percorre o vetor patentes do jogador para verificar as patentes existentes
             for (var i = 0; i < patentes.length; i++) {
                 patenteId = patentes[i];
-                console.log('Id da patente' + patenteId.id);
+                console.log('Id da patente ' + patenteId.id);
             }
         } else {
             patenteId = 'undefined';

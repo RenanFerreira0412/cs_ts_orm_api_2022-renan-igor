@@ -18,7 +18,7 @@ export default abstract class Artefato {
     @Column()
     valor: number;
 
-    @ManyToOne(type => ItensCompra)
-    @JoinColumn({ name: "itensCompra_id", referencedColumnName: "id" })
-    endereco: ItensCompra;
+    // @ManyToOne(type => ItensCompra)
+    // @JoinColumn({ name: "itensCompra_id", referencedColumnName: "id" })
+    // endereco: ItensCompra;
 }

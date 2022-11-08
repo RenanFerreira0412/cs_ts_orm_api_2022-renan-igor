@@ -27,7 +27,9 @@ class AuthController {
 
         await repository.save(nicknameExists)
 
-        return res.sendStatus(200);
+        const lista = await repository.createQueryBuilder('tb_jogador').where({ "nickname": nicknameExists.nickname }).innerJoinAndSelect("tb_jogador.patentes", "patente").getMany();
+        //return res.json(nicknameExists).sendStatus(200);
+        return res.status(200).json(lista);
     }
 
 }
