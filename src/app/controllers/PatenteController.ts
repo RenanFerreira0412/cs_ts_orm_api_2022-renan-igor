@@ -46,12 +46,12 @@ class PatenteController {
 
         if (patenteExists) {
 
-            await repository.remove(patenteExists);//caso exista, então aplica a remocao fisica. (corrigir erro no pdf 11)
+            await repository.remove(patenteExists);//caso exista, então aplica a remocao fisica.
             return res.sendStatus(204);//retorna o coigo 204.
 
         } else {
 
-            return res.sendStatus(404);//se nao encontrar jogador para remover, retorna o codigo 404.
+            return res.sendStatus(404);//se nao encontrar Patente para remover, retorna o codigo 404.
         }
     }
 

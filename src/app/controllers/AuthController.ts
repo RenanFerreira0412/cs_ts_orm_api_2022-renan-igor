@@ -10,7 +10,7 @@ class AuthController {
 
         console.log(req.body);//imprime na saida padrão a mensagem recebida. Isso é apenas para teste...
 
-        const { nickname, senha } = req.body;//extrai os atributos nickname do corpo da mensagem.
+        const { nickname, senha } = req.body;//extrai os atributos nickname e senha do corpo da mensagem.
 
         const nicknameExists = await repository.findOne({ where: { nickname } });//consulta na tabela se existe um registro com o mesmo nickname da mensagem.
 
@@ -27,7 +27,7 @@ class AuthController {
 
         await repository.save(nicknameExists)
 
-        const lista = await repository.createQueryBuilder('tb_jogador').where({ "nickname": nicknameExists.nickname }).innerJoinAndSelect("tb_jogador.patentes", "patente").getMany();
+        const lista = await repository.createQueryBuilder('tb_jogador').where({ "nickname": nicknameExists.nickname }).innerJoinAndSelect("tb_jogador.endereco", "endereco").leftJoinAndSelect("tb_jogador.patentes", "patente").getMany();
         //return res.json(nicknameExists).sendStatus(200);
         return res.status(200).json(lista);
     }

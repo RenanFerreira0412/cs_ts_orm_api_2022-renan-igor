@@ -13,7 +13,7 @@ describe("persistence test", () => {
         await setup()
     });
 
-    test('teste /patente/list e /patente/delete', async () => {
+    it('teste /patente/list e /patente/delete', async () => {
         var agent = supertest(app);
         const postList = await agent.get('/patentes');
         expect(postList.statusCode).toEqual(200);
@@ -49,15 +49,15 @@ describe("persistence test", () => {
     });
 
 
-    test('teste /jogador/list e /jogador/delete', async () => {
+    it('teste /jogador/list e /jogador/delete', async () => {
         var agent = supertest(app);
-        const ret = await agent.get('/jogadores');
-        expect(ret.statusCode).toEqual(200);
+        const listJogador = await agent.get('/jogadores');
+        expect(listJogador.statusCode).toEqual(200);
 
-        if (ret.body.length > 0) {
-            console.log(`Encontrou ${ret.body.length} jogadores cadastrados.`);
+        if (listJogador.body.length > 0) {
+            console.log(`Encontrou ${listJogador.body.length} jogadores cadastrados.`);
 
-            for (const j of ret.body) {
+            for (const j of listJogador.body) {
 
                 const data = { "nickname": j.nickname };
                 console.log(`Removendo o jogador ${data.nickname}.`);
@@ -65,7 +65,7 @@ describe("persistence test", () => {
                 expect(postDeleteJogador.statusCode).toEqual(204);
             }
         } else {
-            console.log("Não encontrou jogadores cadastrados, cadastrando novo jogador e endereco.");
+            console.log("Não encontrou jogadores cadastrados, cadastrando novo jogador e patente.");
 
             const postCreatePatente = await agent.post('/patentes').send({ "nome": "Platina", "cor": "cinza" });
             expect(postCreatePatente.statusCode).toEqual(200);

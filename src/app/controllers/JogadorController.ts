@@ -12,7 +12,7 @@ class JogadorController {
         //retorna uma lista de objetos contendo os registros de tb_jogador
         //const lista = await repository.find();
 
-        //retorna uma lista de objetos contendos os registros de tb_jogador e mais as vinculações com tb_endereco, caso exista.
+        //retorna uma lista de objetos contendos os registros de tb_jogador e mais as vinculações com tb_patentes, caso exista.
         const lista = await repository.createQueryBuilder('tb_jogador').innerJoinAndSelect("tb_jogador.patentes", "patente").getMany();
         //const lista = await repository.createQueryBuilder('tb_jogador').innerJoinAndSelect("tb_jogador.endereco", "endereco").leftJoinAndSelect("tb_jogador.patentes", "patente").getMany();
 
@@ -42,7 +42,7 @@ class JogadorController {
         return res.json(j);//retorna o bojeto json no response.
 
     }
-    //código fonte referente ao pdf da parte 6.
+
     async delete(req: Request, res: Response) {
 
         const repository = getRepository(Jogador);//recupera o repositorio do jogador.
@@ -53,7 +53,7 @@ class JogadorController {
 
         if (nicknameExists) {
 
-            await repository.remove(nicknameExists);//caso exista, então aplica a remocao fisica. (corrigir erro no pdf 11)
+            await repository.remove(nicknameExists);//caso exista, então aplica a remocao fisica. 
             return res.sendStatus(204);//retorna o coigo 204.
 
         } else {
@@ -62,31 +62,17 @@ class JogadorController {
         }
     }
 
-    //código fonte referente ao pdf da parte 6.
     async update(req: Request, res: Response) {
 
         const repository = getRepository(Jogador);//recupera o repositorio do jogador.
 
-        const { nickname, endereco, patentes } = req.body;//extrai os atributos nickname e endereco do corpo da mensagem.
+        const { nickname } = req.body;//extrai os atributos nickname e endereco do corpo da mensagem.
 
-        var patenteId;
-
-        //Verifica se o vetor patentes não está vazio
-        if (patentes != undefined) {
-            //Percorre o vetor patentes do jogador para verificar as patentes existentes
-            for (var i = 0; i < patentes.length; i++) {
-                patenteId = patentes[i];
-                console.log('Id da patente ' + patenteId.id);
-            }
-        } else {
-            patenteId = 'undefined';
-        }
 
         const nicknameExists = await repository.findOne({ where: { nickname } });//consulta na tabela se existe um registro com o mesmo nickname da mensagem.
         //const enderecoExists = await getRepository(Endereco).findOne({ where: { "id": endereco.id } });//consulta na tabela se existe um registro com o mesmo endereco da mensagem.
-        const patenteExists = await getRepository(Patente).findOne({ where: { "id": patenteId.id } });//consulta na tabela se existe um registro com a mesma patente da mensagem.
 
-        if (!nicknameExists || !patenteExists || patenteId == 'undefined') {
+        if (!nicknameExists) {
             return res.sendStatus(404);
         }
 
