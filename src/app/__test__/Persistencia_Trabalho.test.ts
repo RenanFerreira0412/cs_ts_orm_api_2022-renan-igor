@@ -54,6 +54,8 @@ describe("persistence test", () => {
         const listJogador = await agent.get('/jogadores');
         expect(listJogador.statusCode).toEqual(200);
 
+        console.log(listJogador.body.length)
+
         if (listJogador.body.length > 0) {
             console.log(`Encontrou ${listJogador.body.length} jogadores cadastrados.`);
 
